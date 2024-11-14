@@ -15,4 +15,4 @@ class ContentAdmin(admin.ModelAdmin):
         return True
 
 admin.site.register(Sms, SmsAdmin)
-admin.site.register(Content, ContentAdmin)
+admin.site.register(Content)

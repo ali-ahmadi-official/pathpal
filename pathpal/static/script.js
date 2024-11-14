@@ -169,26 +169,8 @@ box_completes.forEach(box_complete => {
     });
 });
 
-const users = document.querySelectorAll('.user');
-
-function validatePassword(password) {
-    const minLength = 6;
-    let errors = [];
-
-    if (password.length < minLength) {
-        errors.push("رمز عبور باید حداقل " + minLength + " کاراکتر باشد.");
-    }
-
-    if (!/[A-Z]/.test(password) || !/[a-z]/.test(password)) {
-        errors.push("رمز عبور باید شامل حداقل یک حرف بزرگ و یک حرف کوچک باشد.");
-    }
-
-    if (errors.length > 0) {
-        return errors.join("\n");
-    }
-
-    return "رمز عبور معتبر است.";
-}
+const users = document.querySelectorAll('.self_phone_number');
+const usernames = document.querySelectorAll('.self_username');
 
 function validatePhoneNumber(phoneNumber) {
     let errors = [];
@@ -202,7 +184,7 @@ function validatePhoneNumber(phoneNumber) {
         errors.push("شماره موبایل باید دقیقاً 10 رقمی باشد.");
     }
 
-    users.forEach(user => {
+    users.forEach(user => {        
         if (user.innerHTML == phoneNumber) {
             errors.push("کاربری با این شماره ثبت نام کرده است!");
         }
@@ -215,17 +197,27 @@ function validatePhoneNumber(phoneNumber) {
     return "شماره موبایل معتبر است.";
 }
 
-function validatePhoneNumber2(phoneNumber) {
+function validateUserName(newusername) {
     let errors = [];
-    let user_phones = [];
 
-    users.forEach(user => {
-        let user_phone = user.innerHTML;
-        user_phones.push(user_phone);
+    usernames.forEach(name => {
+        if (name.innerHTML == newusername) {
+            errors.push("این نام کاربری خارج از دسترس است!");            
+        }
     });
 
-    if (!user_phones.includes(phoneNumber)) {
-        errors.push("کاربری با این شماره یافت نشد!");
+    if (errors.length > 0) {
+        return errors.join("\n");
+    }
+
+    return "شماره موبایل معتبر است.";
+}
+
+function validatePass(pass1, pass2) {
+    let errors = [];
+
+    if (pass1 !== pass2) {
+        errors.push("فیلد تکرار رمز یکسان نیست.")
     }
 
     if (errors.length > 0) {
@@ -236,39 +228,26 @@ function validatePhoneNumber2(phoneNumber) {
 }
 
 function validateForm() {
-    const password = document.getElementById('password').value;
     const phoneNumber = document.getElementById('phone_number');
     const phoneValue = phoneNumber.value.trim();
+    const username = document.querySelector('#username1').value;
+    const pass1 = document.getElementById('password1').value;
+    const pass2 = document.getElementById('password2').value;
+    
 
-    const validationMessage = validatePassword(password);
-    const validationMessage2 = validatePhoneNumber(phoneValue);
+    const validationMessage1 = validatePhoneNumber(phoneValue);
+    const validationMessage2 = validateUserName(username);
+    const validationMessage3 = validatePass(pass1, pass2);
 
-    if (validationMessage !== "رمز عبور معتبر است.") {
-        alert(validationMessage);
+    if (validationMessage1 !== "شماره موبایل معتبر است.") {
+        alert(validationMessage1);
         return false;
     } if (validationMessage2 !== "شماره موبایل معتبر است.") {
-        alert(validationMessage2);
+        alert(validationMessage2)
         return false;
-    } else {
-        firstForm.style.display = 'flex';
-        firstSign.style.display = 'none';
-        hidden.style.display = 'block';
-        saveState();
-
-        return true;
-    }
-}
-
-function validateLogin() {
-    const phoneNumber = document.getElementById('phone_number2');
-    const phoneValue = phoneNumber.value.trim();
-
-    const validationMessage2 = validatePhoneNumber2(phoneValue);
-
-    if (validationMessage2 !== "شماره موبایل معتبر است.") {
-        alert(validationMessage2);
-
-        return false;
+    } if (validationMessage3 !== "شماره موبایل معتبر است.") {
+        alert(validationMessage3)
+        return false
     } else {
         firstForm.style.display = 'none';
         firstSign.style.display = 'none';
@@ -277,4 +256,13 @@ function validateLogin() {
 
         return true;
     }
+}
+
+function validateLogin() {
+    firstForm.style.display = 'none';
+    firstSign.style.display = 'none';
+    hidden.style.display = 'none';
+    saveState();
+
+    return true;
 }

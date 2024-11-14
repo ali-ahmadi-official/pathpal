@@ -1,14 +1,12 @@
 from django.views.generic.edit import CreateView
 from django.views.generic import DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import ValidationError
 from django.http import Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.urls import reverse_lazy
-from django.contrib import messages
 
-from account.forms import CustomeUserCreationForm, PhoneLoginForm
+from account.forms import CustomUserCreationForm
 from account.models import User
 
 from .models import Sms, Content
@@ -43,34 +41,15 @@ def view(request):
 
 def signup(request):
     if request.method == 'POST':
-        signup = CustomeUserCreationForm(request.POST)
-        if signup.is_valid():
-            signup.save()
-            return redirect('app:sms_list')
-    else:
-        signup = CustomeUserCreationForm()
-    
-    return render(request, 'app/signup.html', {'signup': signup})
-
-
-def phone_login_view(request):
-    if request.method == "POST":
-        form = PhoneLoginForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            try:
-                user = form.authenticate()
-                if user:
-                    login(request, user)
-                    messages.success(request, "Logged in successfully!")
-                    return redirect('app:sms_list')
-            except ValidationError as e:
-                messages.error(request, str(e))
+            form.save()
+            return redirect('app:sms_list')
         else:
-            messages.error(request, "Please correct the errors below.")
+            return render(request, 'app/signup.html', {'form': form})
     else:
-        form = PhoneLoginForm()
-
-    return render(request, "app/login.html", {"form": form})
+        form = CustomUserCreationForm()
+    return render(request, 'app/signup.html', {'form': form})
 
 class SmsCreateView(LoginRequiredMixin, CreateView):
     model = Sms

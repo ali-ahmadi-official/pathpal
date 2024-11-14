@@ -171,25 +171,6 @@ box_completes.forEach(box_complete => {
 
 const users = document.querySelectorAll('.user');
 
-function validatePassword(password) {
-    const minLength = 6;
-    let errors = [];
-
-    if (password.length < minLength) {
-        errors.push("رمز عبور باید حداقل " + minLength + " کاراکتر باشد.");
-    }
-
-    if (!/[A-Z]/.test(password) || !/[a-z]/.test(password)) {
-        errors.push("رمز عبور باید شامل حداقل یک حرف بزرگ و یک حرف کوچک باشد.");
-    }
-
-    if (errors.length > 0) {
-        return errors.join("\n");
-    }
-
-    return "رمز عبور معتبر است.";
-}
-
 function validatePhoneNumber(phoneNumber) {
     let errors = [];
     const phoneRegex = /^[0-9]{10}$/;
@@ -215,38 +196,13 @@ function validatePhoneNumber(phoneNumber) {
     return "شماره موبایل معتبر است.";
 }
 
-function validatePhoneNumber2(phoneNumber) {
-    let errors = [];
-    let user_phones = [];
-
-    users.forEach(user => {
-        let user_phone = user.innerHTML;
-        user_phones.push(user_phone);
-    });
-
-    if (!user_phones.includes(phoneNumber)) {
-        errors.push("کاربری با این شماره یافت نشد!");
-    }
-
-    if (errors.length > 0) {
-        return errors.join("\n");
-    }
-
-    return "شماره موبایل معتبر است.";
-}
-
 function validateForm() {
-    const password = document.getElementById('password').value;
     const phoneNumber = document.getElementById('phone_number');
     const phoneValue = phoneNumber.value.trim();
 
-    const validationMessage = validatePassword(password);
     const validationMessage2 = validatePhoneNumber(phoneValue);
 
-    if (validationMessage !== "رمز عبور معتبر است.") {
-        alert(validationMessage);
-        return false;
-    } if (validationMessage2 !== "شماره موبایل معتبر است.") {
+    if (validationMessage2 !== "شماره موبایل معتبر است.") {
         alert(validationMessage2);
         return false;
     } else {
@@ -260,21 +216,10 @@ function validateForm() {
 }
 
 function validateLogin() {
-    const phoneNumber = document.getElementById('phone_number2');
-    const phoneValue = phoneNumber.value.trim();
+    firstForm.style.display = 'none';
+    firstSign.style.display = 'none';
+    hidden.style.display = 'none';
+    saveState();
 
-    const validationMessage2 = validatePhoneNumber2(phoneValue);
-
-    if (validationMessage2 !== "شماره موبایل معتبر است.") {
-        alert(validationMessage2);
-
-        return false;
-    } else {
-        firstForm.style.display = 'none';
-        firstSign.style.display = 'none';
-        hidden.style.display = 'none';
-        saveState();
-
-        return true;
-    }
+    return true;
 }
