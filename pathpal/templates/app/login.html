@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رمز عبور نادرست است!</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #379683;
+            min-height: 100vh;
+        }
+
+        .message {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 200px;
+            height: 200px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #edf5e1;
+        }
+
+        a {
+            text-decoration: none;
+            color: #05386b;
+            margin-top: 20px;
+        }
+
+        a:hover {
+            color: #379683;
+        }
+
+        @media screen and (min-width: 768px) {
+            .message {
+                width: 500px;
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="message">
+        <p>رمز عبور نادرست است</p>
+        <a href="{% url 'app:sms_list' %}">بازگشت به خانه</a>
+    </div>
+</body>
+
+</html>
