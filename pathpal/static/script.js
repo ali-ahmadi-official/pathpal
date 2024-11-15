@@ -169,7 +169,6 @@ box_completes.forEach(box_complete => {
     });
 });
 
-const users = document.querySelectorAll('.self_phone_number');
 const usernames = document.querySelectorAll('.self_username');
 
 function validatePhoneNumber(phoneNumber) {
@@ -184,25 +183,9 @@ function validatePhoneNumber(phoneNumber) {
         errors.push("شماره موبایل باید دقیقاً 10 رقمی باشد.");
     }
 
-    users.forEach(user => {        
+    usernames.forEach(user => {        
         if (user.innerHTML == phoneNumber) {
             errors.push("کاربری با این شماره ثبت نام کرده است!");
-        }
-    });
-
-    if (errors.length > 0) {
-        return errors.join("\n");
-    }
-
-    return "شماره موبایل معتبر است.";
-}
-
-function validateUserName(newusername) {
-    let errors = [];
-
-    usernames.forEach(name => {
-        if (name.innerHTML == newusername) {
-            errors.push("این نام کاربری خارج از دسترس است!");            
         }
     });
 
@@ -230,20 +213,15 @@ function validatePass(pass1, pass2) {
 function validateForm() {
     const phoneNumber = document.getElementById('phone_number');
     const phoneValue = phoneNumber.value.trim();
-    const username = document.querySelector('#username1').value;
     const pass1 = document.getElementById('password1').value;
     const pass2 = document.getElementById('password2').value;
     
 
     const validationMessage1 = validatePhoneNumber(phoneValue);
-    const validationMessage2 = validateUserName(username);
     const validationMessage3 = validatePass(pass1, pass2);
 
     if (validationMessage1 !== "شماره موبایل معتبر است.") {
         alert(validationMessage1);
-        return false;
-    } if (validationMessage2 !== "شماره موبایل معتبر است.") {
-        alert(validationMessage2)
         return false;
     } if (validationMessage3 !== "شماره موبایل معتبر است.") {
         alert(validationMessage3)

@@ -21,14 +21,20 @@ def view(request):
     if form.is_valid():
         product = form.cleaned_data.get('product')
         color = form.cleaned_data.get('color')
-        date = form.cleaned_data.get('date')
+        day = form.cleaned_data.get('day')
+        month = form.cleaned_data.get('month')
+        year = form.cleaned_data.get('year')
         
         if product:
             smss = smss.filter(product__icontains=product)
         if color:
             smss = smss.filter(color__icontains=color)
-        if date:
-            smss = smss.filter(date__icontains=date)
+        if day:
+            smss = smss.filter(day=day)
+        if month:
+            smss = smss.filter(month=month)
+        if year:
+            smss = smss.filter(year=year)
 
     context = {
         'smss': smss,
@@ -53,7 +59,7 @@ def signup(request):
 
 class SmsCreateView(LoginRequiredMixin, CreateView):
     model = Sms
-    fields = ['product', 'color', 'characteristic', 'date', 'number', 'price']
+    fields = ['product', 'color', 'characteristic', 'day', 'month', 'year', 'number', 'price']
     success_url = reverse_lazy('app:sms_list')
 
     def form_valid(self, form):

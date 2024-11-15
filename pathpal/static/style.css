@@ -105,7 +105,7 @@ header {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 100px;
+    height: 50px;
     background-color: #5cdb95;
     color: #edf5e1;
 }
@@ -119,7 +119,7 @@ header {
     border-radius: 100%;
     border: 10px solid #5cdb95;
     position: absolute;
-    bottom: 55px;
+    bottom: 5px;
     cursor: pointer;
 }
 
@@ -163,6 +163,7 @@ li {
     color: #05386b;
     padding: 20px 0;
     opacity: 0;
+    font-size: 12px;
     transform: translateY(30px);
     transition: opacity 0.8s ease, transform 0.8s ease;
 }
@@ -299,10 +300,6 @@ form, .form, .input-container {
     width: 100%;
 }
 
-.input-container {
-    flex-direction: row;
-}
-
 a {
     text-decoration: none;
     color: #05386b;
@@ -332,7 +329,11 @@ a:hover {
     width: 100%;
 }
 
-.searchs input:last-child {
+.adds {
+    grid-template-columns: repeat(1, 1fr);
+}
+
+.searchs div:last-child {
     grid-column: 1 / 3;
 }
 
@@ -372,6 +373,25 @@ a:hover {
 
 .add_box button svg, .search_box button svg {
     margin-right: 10px;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+}
+
+.date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+select {
+    border: none;
+    outline: none;
+    height: 100%;
+    border-radius: 10px;
+    background-color: #fff;
 }
 
 /* animations */
@@ -429,9 +449,17 @@ li.visit {
 /* responsive */
 
 @media screen and (min-width: 768px) {
+    li {
+        font-size: medium;
+    }
+
     .p2 {
         flex-direction: row;
         margin-bottom: 5px;
+    }
+
+    .adds {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .add_box, .search_box, .login_form, .signup_form, .delete_box {
