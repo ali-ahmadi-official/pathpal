@@ -43,6 +43,7 @@ class Content(models.Model):
     field_1 = models.TextField(max_length=100, verbose_name='متن جای خالی اول')
     field_2 = models.TextField(max_length=100, verbose_name='متن جای خالی دوم')
     field_3 = models.TextField(max_length=100, verbose_name='متن جای خالی سوم')
+    field_4 = models.TextField(max_length=100, verbose_name='متن جای خالی چهارم', default='')
 
     def __str__(self):
         return 'محتوای سایت'

@@ -78,7 +78,7 @@
                         <p>در تاریخ <b>{{ sms.date_join }}</b></p>
                     </div>
                     <div class="p2">
-                        <p>به تعداد <b>{{ sms.number }}</b></p>
+                        <p>{{ content.field_4 }}<b>{{ sms.number }}</b></p>
                         <p>و قیمت <b>{{ sms.price }}</b></p>
                         <p>شماره تماس: <b>{{ sms.author.username }}</b></p>
                     </div>
@@ -248,7 +248,7 @@
         <p>
             <b>{{ content.add_u_p }}</b>
         </p>
-        <form action="{% url 'app:sms_create' %}" method="post"> {% csrf_token %}
+        <form action="{% url 'app:sms_create' %}" method="post" onsubmit="return validateAdd()"> {% csrf_token %}
             <div class="adds">
                 <input type="text" name="product" id="1" placeholder="{{ content.field_1 }}" maxlength="200" required>
                 <input type="text" name="color" id="2" placeholder="{{ content.field_2 }}" maxlength="100" required>
@@ -256,8 +256,8 @@
                     required>
                 <div class="input">
                     <div class="date">
-                        <input type="number" name="day" id="day" placeholder="روز" maxlength="2" required>
-                    <select class="form-control" id="month" name="month" required>
+                        <input type="number" name="day" id="addDay" placeholder="روز" maxlength="2" required>
+                    <select class="form-control" id="addMonth" name="month" required>
                         <option value="1">فروردین</option>
                         <option value="2">اردیبهشت</option>
                         <option value="3">خرداد</option>
@@ -271,13 +271,13 @@
                         <option value="11">بهمن</option>
                         <option value="12">اسفند</option>
                     </select>
-                    <input type="number" name="year" id="year" placeholder="سال" maxlength="4" required>
+                    <input type="number" name="year" id="addYear" placeholder="سال" maxlength="4" required>
                     </div>
                 </div>
-                <input type="number" name="number" id="5" placeholder="تعداد" required>
+                <input type="number" name="number" id="5" placeholder="{{ content.field_4 }}" required>
                 <input type="text" name="price" id="6" placeholder="قیمت" maxlength="100" required>
             </div>
-            <button type="submit" class="box_complete">
+            <button type="submit" class="add_complete">
                 ثبت پیام
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-lg"
                     viewBox="0 0 16 16">

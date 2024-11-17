@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.views.generic.edit import CreateView
 from django.views.generic import DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -11,9 +12,16 @@ from account.models import User
 
 from .models import Sms, Content
 from .forms import SmsSearchForm
+from .jalaly import Persian
 
 def view(request):
+    today = datetime.today().date()
     smss = Sms.objects.all()
+    for sms in smss:
+        output = Persian(sms.year, sms.month, sms.day).gregorian_datetime()
+        if output < today:
+            sms.delete()
+
     users = User.objects.all()
     form = SmsSearchForm(request.GET)
     content = Content.objects.get(id=1)
@@ -49,7 +57,8 @@ def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            login(request, user)
             return redirect('app:sms_list')
         else:
             return render(request, 'app/signup.html', {'form': form})
